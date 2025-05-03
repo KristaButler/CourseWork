@@ -5,3 +5,6 @@ Adding the info message when duration is less than one was optional.
 
 Things I added:
 Set Min value to 0 on all inputs.
+
+Change Log:
+5/2/2025 - Finished Assignment independently
