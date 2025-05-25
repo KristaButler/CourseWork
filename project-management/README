@@ -1,0 +1,5 @@
+Class assignment from React - The Complete Guide 2025 taught by Maximilian Schwarzmüller.
+https://www.udemy.com/course/react-the-complete-guide-incl-redux
+
+This is the version of the app made with the instructor in the course. 
+With one addition, the filtered task list being sent down to the task component.
