@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { CartContext } from '../store/cart-context';
+import { currencyFormatter } from '../util/formatter';
 
 export default function Meal({ item }) {
   const { addItem } = useContext(CartContext);
@@ -17,7 +18,9 @@ export default function Meal({ item }) {
         />
         <h3>{item.title}</h3>
         <div>
-          <p className='meal-item-price'>{item.price}</p>
+          <p className='meal-item-price'>
+            {currencyFormatter.format(item.price)}
+          </p>
           <p className='meal-item-description'>{item.description}</p>
         </div>
         <p className='meal-item-actions'>
