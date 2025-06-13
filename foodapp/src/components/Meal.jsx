@@ -9,6 +9,7 @@ export default function Meal({ item }) {
       id={item.id}
       className='meal-item'
     >
+      {/* Updated Markup to match the format used by instructor for better appearance */}
       <article>
         <img
           src={`http://localhost:3000/${item.image}`}
@@ -16,10 +17,10 @@ export default function Meal({ item }) {
         />
         <h3>{item.title}</h3>
         <div>
-          <span className='meal-item-price'>{item.price}</span>
+          <p className='meal-item-price'>{item.price}</p>
+          <p className='meal-item-description'>{item.description}</p>
         </div>
-        <div className='meal-item-description'>{item.description}</div>
-        <div className='meal-item-actions'>
+        <p className='meal-item-actions'>
           <button
             className='button'
             onClick={() => {
@@ -28,7 +29,7 @@ export default function Meal({ item }) {
           >
             Add to Cart
           </button>
-        </div>
+        </p>
       </article>
     </li>
   );
