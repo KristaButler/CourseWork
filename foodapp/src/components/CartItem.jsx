@@ -1,5 +1,6 @@
 import { use, useActionState } from 'react';
 import { CartContext } from '../store/cart-context';
+import { currencyFormatter } from '../util/formatter';
 
 export default function CartItem({ item }) {
   const { addItem, removeItem } = use(CartContext);
@@ -23,11 +24,11 @@ export default function CartItem({ item }) {
       className='cart-item'
     >
       <p>
-        {item.name} - {item.qty} x {item.price}
+        {item.name} - {item.quantity} x {currencyFormatter.format(item.price)}
       </p>
       <form className='cart-item-actions'>
         <button formAction={removeItemAction}>-</button>
-        {item.qty}
+        {item.quantity}
         <button formAction={addItemAction}>+</button>
       </form>
     </li>

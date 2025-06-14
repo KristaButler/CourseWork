@@ -2,46 +2,22 @@ import { use, useImperativeHandle, useRef } from 'react';
 
 import { createPortal } from 'react-dom';
 import CartItem from './CartItem';
+import { CartContext } from '../store/cart-context';
+import { currencyFormatter } from '../util/formatter';
+import Button from './UI/Button';
 
-const items = [
-  {
-    id: 'm1',
-    name: 'Mac & Cheese',
-    price: '8.99',
-    description:
-      'Creamy cheddar cheese mixed with perfectly cooked macaroni, topped with crispy breadcrumbs. A classic comfort food.',
-    image: 'images/mac-and-cheese.jpg',
-    qty: 1,
-  },
-  {
-    id: 'm2',
-    name: 'Margherita Pizza',
-    price: '12.99',
-    description:
-      'A classic pizza with fresh mozzarella, tomatoes, and basil on a thin and crispy crust.',
-    image: 'images/margherita-pizza.jpg',
-    qty: 1,
-  },
-  {
-    id: 'm3',
-    name: 'Caesar Salad',
-    price: '7.99',
-    description:
-      'Romaine lettuce tossed in Caesar dressing, topped with croutons and parmesan shavings.',
-    image: 'images/caesar-salad.jpg',
-    qty: 1,
-  },
-];
-
-export default function CartModal({ ref }) {
+export default function CartModal({ ref, sumbitAction }) {
   const dialog = useRef();
 
-  //const { items, addItem, removeItem } = use(CartContext);
+  const { items, total } = use(CartContext);
 
   useImperativeHandle(ref, () => {
     return {
       open() {
         dialog.current.showModal();
+      },
+      close() {
+        dialog.current.close();
       },
     };
   });
@@ -65,20 +41,18 @@ export default function CartModal({ ref }) {
           ))}
         </ul>
       )}
-      <div className='cart-total'>TODO: TOTAL</div>
-      <div className='modal-actions'>
-        <form>
-          <button className='text-button'>Close</button>
-          {items.length > 0 && (
-            <button
-              className='button'
-              disabled={items.length <= 0}
-            >
-              Go to Checkout
-            </button>
-          )}
-        </form>
-      </div>
+      <div className='cart-total'>{currencyFormatter.format(total.price)}</div>
+      <p className='modal-actions'>
+        <Button
+          textOnly
+          onClick={() => dialog.current.close()}
+        >
+          Close
+        </Button>
+        {items.length > 0 && (
+          <Button onClick={sumbitAction}>Go to Checkout</Button>
+        )}
+      </p>
     </dialog>,
     document.getElementById('modal')
   );

@@ -1,48 +1,35 @@
-import { createContext, useState } from 'react';
+import { createContext, useReducer } from 'react';
+import { cartReducer } from '../util/cartReducer.js';
+//Added Reducer like the instructor did right away, instead of later like I planned.
+//I also decided to outsource the reducer.
 
 export const CartContext = createContext({
   items: [],
+  total: { quantity: 0, price: 0 },
   addItem: (item) => {},
   removeItem: (itemId) => {},
 });
 
 export function CartContextProvider({ children }) {
-  const [items, setItems] = useState([]);
+  const [cart, dispatch] = useReducer(cartReducer, {
+    items: [],
+    total: { quantity: 0, price: 0 },
+  });
 
   function addItem(item) {
-    console.log('Adding Item to Cart');
-    let qty = 1;
-
-    if (prevItems.includes(item.id)) {
-      qty = prevItems[item.id].qty + 1;
-    }
-
-    setItems((prevItems) => [...prevItems, { ...item, qty }]);
+    dispatch({ type: 'ADD_ITEM', item });
   }
 
-  function removeItem(itemId) {
-    console.log('Removing Item to Cart');
-    let qty = 0;
-
-    if (prevItems.includes(itemId)) {
-      qty = prevItems[itemId].qty - 1;
-    }
-
-    if (qty === 0) {
-      setItems((prevItems) => prevItems.filter((item) => item.id === item.id));
-      return;
-    }
-
-    setItems((prevItems) => [...prevItems, { ...item, qty }]);
+  function removeItem(id) {
+    dispatch({ type: 'REMOVE_ITEM', id });
   }
 
   const contextValue = {
-    items,
+    items: cart.items,
+    total: cart.total,
     addItem,
     removeItem,
   };
 
-  return (
-    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
-  );
+  return <CartContext value={contextValue}>{children}</CartContext>;
 }
