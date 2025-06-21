@@ -9,3 +9,7 @@ forms/
 module/
 demoapp/
 foodapp-class/
+redux/
+advanced-redux/
+routing/
+routing-with-react/
